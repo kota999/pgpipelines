@@ -18,7 +18,7 @@ Add below col to settings.py at your scrapy project.
 
     PG_PIPELINE = {
         'connection': 'postgresql://localhost:5432/postgres',
-        'table_name': 'scrapy_data',
+        'table_name': 'scraped_data',
         'col': {
             'table_col1': ('item_key1', types.UnicodeText),
             'table_col2': ('item_key2', types.UnicodeText)
