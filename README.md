@@ -32,6 +32,7 @@ Add below col to settings.py at your scrapy project.
      + table_name: specify table_name
      + col: specify column name for insert table and item key of scrapy, column type for insert table
          + format is "column_name": ("item_key", "column_type")
+         + "item_key" is item key of scraping result (defined at items.py, if scrapy template project), access is item.get("item_key")
          + "column_type" is usable dataset.types (omit datetime)
      + bulksize: optional, bulk import items size
          + default is 1000
