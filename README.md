@@ -7,7 +7,7 @@ Postgres pipeline for Scrapy.
 
 ## Usage
 
-Add below col to settings.py at your scrapy project.
+Add below  to settings.py at your scrapy project.
 
     # settings.py
     from dataset import types
