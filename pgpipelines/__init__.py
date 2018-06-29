@@ -27,7 +27,7 @@ class PgPipeline(object):
             self.table = self.db.create_table(self.kw.get('table_name'))
             for col_name, (item_col, col_type) in self.kw.get('col').items():
                 self.table.create_column(col_name, col_type)
-            self.table.create_column('datetime', dataset.types.Float)
+            self.table.create_column('datetime', dataset.types.DateTime)
             self.process = True
 
     def close_spider(self, spider):
@@ -38,7 +38,7 @@ class PgPipeline(object):
     def process_item(self, item, spider):
         if self.process:
             insert_data = {col_name: item.get(item_col) for col_name, (item_col, col_type) in self.kw.get('col').items()}
-            insert_data['datetime'] = self.now.timestamp()
+            insert_data['datetime'] = self.now
             self.buffer.append(insert_data)
             if len(self.buffer) > self.bulksize:
                 self.table.insert_many(self.buffer)
