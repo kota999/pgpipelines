@@ -11,8 +11,10 @@ class PgPipeline(object):
         from datetime import datetime
         self.process = False
         self.kw = crawler.settings.get('PG_PIPELINE')
-        self.buffer = []
         self.bulksize = self.kw.get('bulksize') if self.kw.get('bulksize') else 1000
+        self.primary = self.kw.get('primary') if self.kw.get('primary') else None
+        self.primary_type = self.kw.get('col').get(self.primary)[1] if self.primary and self.kw.get('col').get(self.primary) else None
+        self.buffer = []
         self.now = datetime.now()
 
     @classmethod
@@ -24,10 +26,12 @@ class PgPipeline(object):
                 self.kw.get('col') and len(self.kw.get('col')) > 0:
             import dataset
             self.db = dataset.connect(self.kw.get('connection'))
-            self.table = self.db.create_table(self.kw.get('table_name'))
+            self.table = self.db.create_table(self.kw.get('table_name'), primary_id=self.primary, primary_type=self.primary_type)
             for col_name, (item_col, col_type) in self.kw.get('col').items():
                 self.table.create_column(col_name, col_type)
             self.table.create_column('datetime', dataset.types.DateTime)
+            if self.primary is not None and self.primary_type is not None:
+                self.table.create_index([self.primary])
             self.process = True
 
     def close_spider(self, spider):
