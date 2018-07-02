@@ -53,7 +53,8 @@ class PgPipeline(object):
     def process_item(self, item, spider):
         if self.process:
             insert_data = {col_name: item.get(item_col) for col_name, (item_col, col_type) in self.kw.get('col').items()}
-            insert_data['datetime'] = self.now
+            if self.auto_datetime:
+                insert_data['datetime'] = self.now
             self.buffer.append(insert_data)
             if len(self.buffer) > self.bulksize:
                 self.table.insert_many(self.buffer)
