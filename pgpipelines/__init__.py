@@ -14,7 +14,7 @@ class PgPipeline(object):
         self.bulksize = self.kw.get('bulksize') if self.kw.get('bulksize') else 1000
         self.primary = self.kw.get('primary') if self.kw.get('primary') else None
         self.primary_type = self.kw.get('col').get(self.primary)[1] if self.primary and self.kw.get('col').get(self.primary) else None
-        self.auto_datetime = self.kw.get('auto_datetime') if self.kw.get('auto_datetime') is not None else True
+        self.auto_datetime = self.kw.get('auto_datetime') if self.kw.get('auto_datetime') is not None else False
         self.buffer = []
         self.now = datetime.now()
 

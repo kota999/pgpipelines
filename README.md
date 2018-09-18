@@ -46,7 +46,7 @@ Add below  to settings.py at your scrapy project.
      + indexing: optional, specify indexing key (column name of specified at 'col')
          + default and invalid primary are None
      + auto_datetime: optional, specify boolean for automatically create 'datetime' column
-        + default is True, automatically create
+        + default is False, automatically create
      + bulksize: optional, bulk import items size
          + default is 1000
 
